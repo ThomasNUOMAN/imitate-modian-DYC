@@ -28,9 +28,10 @@
     <!-- 更新 -->
     <update id="updateAccount" parameterType="Account">
         UPDATE
-        SET `account` ( password = #{password}, last_login_time = #{lastLoginTime}, last_login_ip = #{lastLoginIp})
+        `account`
+        SET   password = #{password}, last_login_time = #{lastLoginTime}, last_login_ip = #{lastLoginIp}
     WHERE
-        account_id = #{accountId};
+        email = #{email};
     </update>
 
 

@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteStar(Star star) {
+    public void deleteStar(Integer userId, Integer projectId) {
 
-        starMapper.delete(new QueryWrapper<Star>().eq(true,"star_project_base_id",star.getStarProjectBaseId()));
+        starMapper.deleteByTwoId(userId,projectId);
     }
 }

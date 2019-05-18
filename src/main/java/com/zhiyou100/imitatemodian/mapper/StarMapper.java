@@ -2,6 +2,7 @@ package com.zhiyou100.imitatemodian.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhiyou100.imitatemodian.entity.Star;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author DingYC
@@ -10,5 +11,5 @@ import com.zhiyou100.imitatemodian.entity.Star;
 
 public interface StarMapper extends BaseMapper<Star> {
 
-
+    void deleteByTwoId(@Param("userId") Integer userId, @Param("projectId") Integer projectId);
 }

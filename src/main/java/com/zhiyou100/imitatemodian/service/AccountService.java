@@ -18,6 +18,6 @@ public interface AccountService {
 
     Account updateCode(String email);
 
-    Account update(Account account);
+    void update(Account account);
 
 }

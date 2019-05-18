@@ -50,7 +50,7 @@ public class UserController {
     }
 
     // @NeedLogin
-    @GetMapping("/getStar")
+    @PostMapping("/getStar")
     public ResponseVo getStar (@RequestBody Star star) {
 
         User loginUser = (User) request.getSession().getAttribute("loginUser");
@@ -62,11 +62,12 @@ public class UserController {
     }
 
     // @NeedLogin
-    @GetMapping("/deleteStar")
-    public ResponseVo deleteStar (@RequestBody Star star) {
+    @DeleteMapping("/deleteStar")
+    public ResponseVo deleteStar (Integer projectId) {
 
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        userService.deleteStar(userId,projectId);
         session.removeAttribute("userId");
-        userService.deleteStar(star);
         vo.setCode(200);
         return vo;
     }

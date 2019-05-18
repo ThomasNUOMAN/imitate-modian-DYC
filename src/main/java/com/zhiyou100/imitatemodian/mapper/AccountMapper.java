@@ -14,6 +14,6 @@ public interface AccountMapper extends BaseMapper<Account> {
 
     Account saveAccount(Account account);
 
-    Account updateAccount(Account account);
+    void updateAccount(Account account);
 
 }

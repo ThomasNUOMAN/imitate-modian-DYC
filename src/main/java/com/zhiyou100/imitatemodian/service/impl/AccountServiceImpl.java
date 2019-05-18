@@ -142,7 +142,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account update(Account account) {
+    public void update(Account account) {
 
         Account upAccountByEmail = accountMapper.findAccountByEmail(account);
         Date date = new Date();
@@ -153,7 +153,5 @@ public class AccountServiceImpl implements AccountService {
         upAccountByEmail.setCodeSendTime(date);
 
         accountMapper.update(upAccountByEmail,new QueryWrapper<Account>().eq(true,"email",upAccountByEmail.getEmail()));
-
-        return upAccountByEmail;
     }
 }
