@@ -1,6 +1,7 @@
 package com.zhiyou100.imitatemodian.controller;
 
 import com.zhiyou100.imitatemodian.annotation.NeedLogin;
+import com.zhiyou100.imitatemodian.entity.Star;
 import com.zhiyou100.imitatemodian.entity.User;
 import com.zhiyou100.imitatemodian.service.UserService;
 import com.zhiyou100.imitatemodian.vo.ResponseVo;
@@ -46,22 +47,20 @@ public class UserController {
 
     // @NeedLogin
     @GetMapping("/getStar")
-    public ResponseVo getStar (@RequestParam("userId") Integer userId,
-                                 @RequestParam("projectBaseId") Integer projectBaseId) {
+    public ResponseVo getStar (@RequestBody Star star) {
 
-        session.setAttribute("userId",userId);
-        session.setAttribute("projectBaseId",projectBaseId);
-
+        session.setAttribute("userId",star.getStarUserId());
+        userService.getStar(star);
         vo.setCode(200);
         return vo;
     }
 
     // @NeedLogin
     @GetMapping("/deleteStar")
-    public ResponseVo deleteStar () {
+    public ResponseVo deleteStar (@RequestBody Star star) {
 
         session.removeAttribute("userId");
-        session.removeAttribute("projectBaseId");
+        userService.deleteStar(star);
         vo.setCode(200);
         return vo;
     }

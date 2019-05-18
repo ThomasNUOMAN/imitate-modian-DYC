@@ -1,5 +1,6 @@
 package com.zhiyou100.imitatemodian.service;
 
+import com.zhiyou100.imitatemodian.entity.Star;
 import com.zhiyou100.imitatemodian.entity.User;
 
 /**
@@ -14,5 +15,9 @@ public interface UserService {
     User update(User user);
 
     User getById(Integer id);
+
+    void getStar(Star star);
+
+    void deleteStar(Star star);
 
 }

@@ -1,7 +1,9 @@
 package com.zhiyou100.imitatemodian.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zhiyou100.imitatemodian.entity.Star;
 import com.zhiyou100.imitatemodian.entity.User;
+import com.zhiyou100.imitatemodian.mapper.StarMapper;
 import com.zhiyou100.imitatemodian.mapper.UserMapper;
 import com.zhiyou100.imitatemodian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private StarMapper starMapper;
 
 
     @Override
@@ -42,5 +47,17 @@ public class UserServiceImpl implements UserService {
     public User getById(Integer accountId) {
 
         return userMapper.selectOne(new QueryWrapper<User>().eq(true,"account_id",accountId));
+    }
+
+    @Override
+    public void getStar(Star star) {
+
+        starMapper.insert(star);
+    }
+
+    @Override
+    public void deleteStar(Star star) {
+
+        starMapper.delete(new QueryWrapper<Star>().eq(true,"star_project_base_id",star.getStarProjectBaseId()));
     }
 }
