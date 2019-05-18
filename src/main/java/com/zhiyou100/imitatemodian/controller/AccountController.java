@@ -77,10 +77,9 @@ public class AccountController {
     @PutMapping("/account")
     public ResponseVo updateAccount (@RequestBody Account account) {
 
-        Account updateAccount = accountService.update(account);
+        accountService.update(account);
 
         vo.setCode(200);
-        vo.setData(updateAccount);
         return vo;
     }
 
