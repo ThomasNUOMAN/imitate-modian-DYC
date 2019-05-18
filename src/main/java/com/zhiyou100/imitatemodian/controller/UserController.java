@@ -7,6 +7,8 @@ import com.zhiyou100.imitatemodian.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author DingYC
  * @create 2019-05-17 15:57
@@ -16,6 +18,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HttpSession session;
 
     private ResponseVo vo = new ResponseVo();
 
@@ -35,6 +40,28 @@ public class UserController {
 
         userService.removeById(id);
 
+        vo.setCode(200);
+        return vo;
+    }
+
+    // @NeedLogin
+    @GetMapping("/getStar")
+    public ResponseVo getStar (@RequestParam("userId") Integer userId,
+                                 @RequestParam("projectBaseId") Integer projectBaseId) {
+
+        session.setAttribute("userId",userId);
+        session.setAttribute("projectBaseId",projectBaseId);
+
+        vo.setCode(200);
+        return vo;
+    }
+
+    // @NeedLogin
+    @GetMapping("/deleteStar")
+    public ResponseVo deleteStar () {
+
+        session.removeAttribute("userId");
+        session.removeAttribute("projectBaseId");
         vo.setCode(200);
         return vo;
     }
