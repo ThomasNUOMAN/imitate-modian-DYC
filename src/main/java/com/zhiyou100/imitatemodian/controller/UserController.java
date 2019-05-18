@@ -8,6 +8,7 @@ import com.zhiyou100.imitatemodian.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private HttpServletRequest request;
 
     private ResponseVo vo = new ResponseVo();
 
@@ -49,6 +53,8 @@ public class UserController {
     @GetMapping("/getStar")
     public ResponseVo getStar (@RequestBody Star star) {
 
+        User loginUser = (User) request.getSession().getAttribute("loginUser");
+        star.setStarUserId(loginUser.getUserId());
         session.setAttribute("userId",star.getStarUserId());
         userService.getStar(star);
         vo.setCode(200);
