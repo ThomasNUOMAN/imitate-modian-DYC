@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyou100.imitatemodian.mapper.AccountMapper">
+
+    <!-- 通过 email 查询 -->
+    <select id="findAccountByEmail" parameterType="Account" resultType="Account">
+        SELECT
+            a.account_id accountId,
+            a.email email,
+            a.password password,
+            a.code code,
+            a.code_send_time codeSendTime,
+            a.last_login_time lastLoginTime,
+            a.last_login_ip lastLoginIp
+        FROM
+            `account` a
+        WHERE
+            email = #{email}
+    </select>
+
+    <!-- 插入新数据 -->
+    <insert id="saveAccount" parameterType="Account">
+        INSERT INTO `account` ( email, password, code, code_send_time )
+        VALUES
+            (#{email},#{password},#{code},#{codeSendTime})
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateAccount" parameterType="Account">
+        UPDATE
+        SET `account` ( password = #{password}, last_login_time = #{lastLoginTime}, last_login_ip = #{lastLoginIp})
+    WHERE
+        account_id = #{accountId};
+    </update>
+
+
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyou100.imitatemodian.mapper.UserProjectBaseDTOMapper">
+
+    <sql id="projectBasesAql">
+        u.user_id userId,
+        u.nick_name nickName,
+        u.head_portrait headPortrait,
+        pb.title title,
+        pb.PC_url PCurl,
+        pb.APP_url APPurl,
+        pb.start_time startTime,
+        pb.raise_amount raiseAmount
+    </sql>
+    <resultMap id="basePageVoMap" type="UserProjectBaseDTO">
+        <association property="user" javaType="User">
+            <id column="userId" property="userId"/>
+            <result column="nickName" property="nickName"/>
+            <result column="headPortrait" property="headPortrait"/>
+        </association>
+        <collection property="projectBase" javaType="ProjectBase">
+            <id column="pbuserId" property="userId"/>
+            <result column="title" property="title"/>
+            <result column="subtitle" property="subtitle"/>
+            <result column="PCurl" property="PCurl"/>
+            <result column="APPurl" property="APPurl"/>
+            <result column="startTime" property="startTime"/>
+            <result column="endTime" property="endTime"/>
+            <result column="projectItdc" property="projectItdc"/>
+            <result column="targetAmount" property="targetAmount"/>
+            <result column="raiseAmount" property="raiseAmount"/>
+            <result column="status" property="status"/>
+        </collection>
+    </resultMap>
+
+    <!-- 发现项目 -->
+    <select id="projectBases" resultMap="basePageVoMap">
+        SELECT
+            <include refid="projectBasesAql"></include>
+        FROM
+            user u,
+            project_base pb
+        WHERE
+        pb.user_id = u.user_id
+    </select>
+
+    <!-- 关注项目 -->
+    <select id="projectBasesById" resultMap="basePageVoMap">
+        SELECT
+            <include refid="projectBasesAql"></include>,
+            pb.user_id pbuserId,
+            pb.subtitle subtitle,
+            pb.project_itdc projectItdc,
+            pb.end_time endTime,
+            pb.target_amount targetAmount,
+            pb.status status
+        FROM
+            user u,
+            project_base pb
+        where
+        pb.user_id = u.user_id
+        AND pb.user_id = #{userId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyou100.imitatemodian.mapper.CommentMapper">
+
+    <sql id="projectSql">
+        c.user_comment_id userCommentId,
+        c.comment_user_id commentUserId,
+        c.comment_project_base_id commentProjectBaseId,
+        c.comment_project_update_id commentProjectUpdateId,
+        c.comment_detail commentDetail,
+        u.user_id userId,
+        u.account_id accountId,
+        u.nick_name nickName,
+        u.head_portrait headPortrait
+    </sql>
+
+    <insert id="insertComment" parameterType="Comment">
+        INSERT INTO `comment` ( comment_user_id, comment_project_base_id, comment_project_update_id, comment_detail, img )
+        VALUES
+        ( #{commentUserId}, #{commentProjectBaseId}, #{commentProjectUpdateId}, #{commentDetail}, #{img} );
+    </insert>
+
+    <!-- 通过 id 查 base 评论 -->
+    <select id="findBaseCommentsById" resultMap="CommentUserDTOMap">
+        SELECT
+            <include refid="projectSql"></include>
+        FROM
+            `comment` c,
+            `user` u
+        WHERE
+            c.comment_user_id = #{userId}
+        AND c.comment_project_base_id = #{projectBaseId}
+    </select>
+
+    <resultMap id="CommentUserDTOMap" type="CommentUserDTO">
+        <association property="user" javaType="User">
+            <id column="userId" property="userId"/>
+            <result column="accountId" property="accountId"/>
+            <result column="nickName" property="nickName"/>
+            <result column="headPortrait" property="headPortrait"/>
+        </association>
+        <collection property="comment" javaType="Comment">
+            <id column="userId" property="commentUserId"/>
+            <result column="userCommentId" property="userCommentId"/>
+            <result column="commentProjectBaseId" property="commentProjectBaseId"/>
+            <result column="commentProjectUpdateId" property="commentProjectUpdateId"/>
+            <result column="commentDetail" property="commentDetail"/>
+        </collection>
+    </resultMap>
+
+    <!-- 通过 id 查 update 评论 -->
+    <select id="findUpdateCommentsById" resultMap="CommentUserDTOMap">
+        SELECT
+        <include refid="projectSql"></include>
+        FROM
+        `comment` c,
+        `user` u
+        WHERE
+        c.comment_user_id = #{userId}
+        AND c.comment_project_update_id = #{projectUpdateId}
+    </select>
+
+    <delete id="deleteComment" parameterType="Comment">
+        DELETE
+        FROM
+            `comment`
+        WHERE
+            comment_user_id = #{commentUserId}
+            AND user_comment_id = #{userCommentId}
+    </delete>
+
+</mapper>
