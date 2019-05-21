@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ImitateModianApplication {
 
     public static void main(String[] args) {
+        System.out.println("==================ready=================");
         SpringApplication.run(ImitateModianApplication.class, args);
+        System.out.println("===================go=====================");
     }
 
 }

@@ -70,6 +70,10 @@
     </dependencies>
 
     <build>
+
+        <!-- 设置打包名字 -->
+        <finalName>crowd-funding-app</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

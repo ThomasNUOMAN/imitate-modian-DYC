@@ -34,11 +34,11 @@ public class AccountController {
         User loginUser = accountService.login(account);
 
         session.setAttribute("loginUser",loginUser);
+        ResponseVo vo1 = new ResponseVo();
+        vo1.setCode(200);
+        vo1.setData(loginUser);
 
-        vo.setCode(200);
-        vo.setData(loginUser);
-
-        return vo;
+        return vo1;
     }
 
     @PostMapping("/register1")
